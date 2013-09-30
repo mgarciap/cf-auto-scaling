@@ -32,6 +32,7 @@ puts "CPU threshold: #{threshold}%"
 puts "------------------"
 
 while true do
+  app = space.apps.first
   avg_cpu_load = app_average_cpu_load app
   avg_mem = app_average_memory app
 
@@ -40,8 +41,8 @@ while true do
   puts "-- AVG CPU load: #{humanise_cpu_usage avg_cpu_load}"
   puts "-- AVG Memory: #{humanise_bytes_to_megabytes avg_mem}"
   puts
-  puts "------------> AVG CPU Load went over threshold (#{threshold}), scaling app by 1 instance" if avg_cpu_load >= threshold
-  scale_app(app, app.total_instances + 1) if avg_cpu_load >= threshold
+  puts "------------> AVG CPU Load went over threshold (#{threshold} %), scaling app by 1 instance" if avg_cpu_load >= threshold
+  scale_app(app, 1) if avg_cpu_load >= threshold
 
   sleep 2.0
 end
