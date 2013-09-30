@@ -2,11 +2,12 @@ module AppsHelpers
 
   def scale_app(app, instances)
     begin
-      app.total_instances = instances
+      app.total_instances += instances
       app.update!
-      puts 'Update successful'
+      puts 'Scaling successful. Lets wait a moment for the new instance to start..'
+      sleep 10
     rescue  CFoundry::InstancesError
-      puts 'Update failed'
+      puts 'Scaling failed'
     rescue CFoundry::AppMemoryQuotaExceeded
       puts "Update failed: You have exceeded your organization's memory limit"
     end
@@ -18,8 +19,12 @@ module AppsHelpers
 
   def app_average_cpu_load app
     cpu_average = 0
-    app.stats.each do |stat|
-      cpu_average += stat[1][:stats][:usage][:cpu].to_i * 100
+    app.stats.each do |i, app_stat|
+      if app_stat.keys.include? :stats
+        cpu_average += app_stat[:stats][:usage][:cpu].to_f * 100
+      else
+        puts "Instance #{i} still booting..."
+      end
     end
     cpu_average / app.total_instances
   end
