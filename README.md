@@ -15,7 +15,7 @@ cd cf-auto-scaling
 bundle
 ```
 
-#### Set up credentials
+#### Set up credentials and application details
 ```
 cp config/config.yml.template config/config.yml
 ```
@@ -25,8 +25,6 @@ Replace values in config.yml to fit your context
 I've created a simple sinatra app that generate secure random number which require CPU (I am very new at this. 
 Sorry for my ignorance)
 > You need to be targeted and logged in into a CF PaaS
-
-Modify or delete manifest.yml if required
 
 ```
 cd cd sinatra-test-app/
@@ -40,13 +38,11 @@ Just run
 ./auto_scale.rb
 ```
 This script runs forever. Just CTR + C it when you are done
-> Current version takes first app from your first space. Yes, it sucks.. quick and dirty, sorry
-
 
 ### Throw load to the app
 Lets make 5000 requests with 20 requests at a time
 ```
-ab -n 5000 -c 20 http://sinatra-manu.cfapps.io/
+ab -n 5000 -c 20 http://sinatra-manu.<paas app domain>/
 ```
 
 ### Whatch it working
