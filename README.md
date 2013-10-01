@@ -1,4 +1,4 @@
-Stupid simple scripts for automaticaly scale applications hosted in Cloudfoundry
+Stupid simple scripts for automaticaly scale applications hosted in a Cloudfoundry PaaS
 
 
 ### Requiremts
@@ -37,7 +37,7 @@ cf push
 ### Auto-Scaling script
 Just run 
 ```
-./auto_scale.rg
+./auto_scale.rb
 ```
 This script runs forever. Just CTR + C it when you are done
 > Current version takes first app from your first space. Yes, it sucks.. quick and dirty, sorry
@@ -52,15 +52,15 @@ ab -n 5000 -c 20 http://sinatra-manu.cfapps.io/
 ### Whatch it working
 First output
 ```
-Cloudfoundry target: https://api.run.pivotal.io
+Cloudfoundry target: https://api.....
 Authenticating with user: <your username defined in config/config.yml>
 Fetching first space...
 Got space: development
 
 Fetching first app from space development ...
-Got app: sinatra-manu (sinatra-manu.cfapps.io)
+Got app: sinatra-manu (sinatra-manu....)
 
-CPU threshold: 50%
+CPU threshold: 70%
 ------------------
 App sinatra-manu stats:
 -- Instances: 1
@@ -76,14 +76,17 @@ App sinatra-manu stats:
 -- AVG CPU load: 100.00 %
 -- AVG Memory: 25.91 MB
 
-------------> AVG CPU Load went over threshold (50), scaling app by 1 instance
+------------> AVG CPU Load went over threshold (70 %), scaling app by 1 instance
+Scaling successful. Lets wait a moment for the new instance to start..
+
 Update successful
 App sinatra-manu stats:
 -- Instances: 2
 -- AVG CPU load: 50.00 %
 -- AVG Memory: 25.90 MB
 
-------------> AVG CPU Load went over threshold (50), scaling app by 1 instance
+------------> AVG CPU Load went over threshold (70 %), scaling app by 1 instance
+Scaling successful. Lets wait a moment for the new instance to start..
 
 App sinatra-manu stats:
 -- Instances: 3
