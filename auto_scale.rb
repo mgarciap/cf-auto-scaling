@@ -17,26 +17,27 @@ client = CFoundry::Client.get config['target']
 puts "Authenticating with user: #{config['username']}"
 client.login :username => config['username'], :password => config['password']
 
-puts 'Fetching first space...' #ToDo: provide options from the user
-space = client.spaces(:depth => 0).first
-puts "Got space: #{space.name}"
-puts
+client.spaces.each { |space|
+  space.apps.each { |an_app|
+    @app = an_app if an_app.name == config['application']
+  } if space.name == config['space']
+}
 
-puts "Fetching first app from space #{space.name} ..." #ToDo: provide options from the user
-app = space.apps.first
-puts "Got app: #{app.name} (#{app.routes.first.name})"
+abort("Application '#{config['application']}' doesn't exist in space '#{config['space']}'. Check your config/config.yml file") if @app.nil?
+puts "Application fetched: #{@app.name} (#{@app.routes.first.name})"
 puts
 
 threshold = 70
 puts "CPU threshold: #{threshold}%"
 puts "-"*30
+puts
 
 while true do
-  avg_cpu_load = app_average_cpu_load app
-  avg_mem = app_average_memory app
+  avg_cpu_load = app_average_cpu_load @app
+  avg_mem = app_average_memory @app
 
-  puts "App #{app.name} stats:"
-  puts "-- Instances: #{app.total_instances}"
+  puts "App #{@app.name} stats:"
+  puts "-- Instances: #{@app.total_instances}"
   puts "-- AVG CPU load: #{humanise_cpu_usage avg_cpu_load}"
   puts "-- AVG Memory: #{humanise_bytes_to_megabytes avg_mem}"
   puts
