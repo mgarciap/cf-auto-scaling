@@ -2,3 +2,5 @@
 target: 'https://api.<your pass>'
 username: '<username>'
 password: '<some pass>'
+space: '<a space>'
+application: '<a application name>'
