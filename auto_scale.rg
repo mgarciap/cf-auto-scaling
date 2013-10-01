@@ -17,22 +17,21 @@ client = CFoundry::Client.get config['target']
 puts "Authenticating with user: #{config['username']}"
 client.login :username => config['username'], :password => config['password']
 
-puts 'Fetching first space...'
+puts 'Fetching first space...' #ToDo: provide options from the user
 space = client.spaces(:depth => 0).first
 puts "Got space: #{space.name}"
 puts
 
-puts "Fetching first app from space #{space.name} ..."
+puts "Fetching first app from space #{space.name} ..." #ToDo: provide options from the user
 app = space.apps.first
 puts "Got app: #{app.name} (#{app.routes.first.name})"
 puts
 
-threshold = 50
+threshold = 70
 puts "CPU threshold: #{threshold}%"
-puts "------------------"
+puts "-"*30
 
 while true do
-  app = space.apps.first
   avg_cpu_load = app_average_cpu_load app
   avg_mem = app_average_memory app
 
