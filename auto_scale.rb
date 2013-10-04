@@ -42,7 +42,7 @@ while true do
   puts "-- AVG Memory: #{humanise_bytes_to_megabytes avg_mem}"
   puts
   puts "------------> AVG CPU Load went over threshold (#{threshold} %), scaling app by 1 instance" if avg_cpu_load >= threshold
-  scale_app(app, 1) if avg_cpu_load >= threshold
+  scale_app(@app, 1) if avg_cpu_load >= threshold
 
   sleep 2.0
 end
