@@ -3,6 +3,7 @@
 require 'cfoundry'
 require_relative 'helpers/stats_helpers'
 require_relative 'helpers/apps_helpers'
+require_relative 'helpers/configuration'
 require 'yaml'
 
 include StatsHelpers
@@ -10,20 +11,28 @@ include AppsHelpers
 
 config = YAML.load_file('config/config.yml')
 
+config = Configuration.new('config/config.yml')
 
-puts "Cloudfoundry target: #{config['target']}"
-client = CFoundry::Client.get config['target']
+# username = config['username'] || ENV['CF_USERNAME']
+# password = config['password'] || ENV['CF_PASSWORD']
+# cf_api = config['target'] || ENV['CF_API']
 
-puts "Authenticating with user: #{config['username']}"
-client.login :username => config['username'], :password => config['password']
 
-client.spaces.each { |space|
-  space.apps.each { |an_app|
-    @app = an_app if an_app.name == config['application']
-  } if space.name == config['space']
-}
+puts "Cloudfoundry target: #{cf_api}"
+client = CFoundry::Client.get(config.api)
 
-abort("Application '#{config['application']}' doesn't exist in space '#{config['space']}'. Check your config/config.yml file") if @app.nil?
+puts "Authenticating with user: #{username}"
+
+
+client.login :username => config.username, :password => config.password
+
+organization = client.organizations.find {|org| org.name == config.organization}
+raise "Can't find organization called \"#{config.organization}\"" if organization.nil? 
+space = organization.spaces.find {|space| space.name == config.space}
+raise "Can't find space called \"#{config.organization}\"" if space.nil? 
+@app = space.organizations.find {|app| org.name == config.application}
+raise "Can't find app called \"#{config.organization}\"" if @app.nil? 
+
 puts "Application fetched: #{@app.name} (#{@app.routes.first.name})"
 puts
 
