@@ -19,7 +19,7 @@ bundle
 ```
 cp config/config.yml.template config/config.yml
 ```
-Replace values in config.yml to fit your context
+Replace values in config.yml to fit your context.
 
 #### Push demo app
 I've created a simple sinatra app that generate secure random number which require CPU (I am very new at this. 

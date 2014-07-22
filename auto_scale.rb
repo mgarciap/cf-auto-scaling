@@ -18,10 +18,10 @@ config = Configuration.new('config/config.yml')
 # cf_api = config['target'] || ENV['CF_API']
 
 
-puts "Cloudfoundry target: #{cf_api}"
+puts "Cloudfoundry target: #{config.api}"
 client = CFoundry::Client.get(config.api)
 
-puts "Authenticating with user: #{username}"
+puts "Authenticating with user: #{config.username}"
 
 
 client.login :username => config.username, :password => config.password
