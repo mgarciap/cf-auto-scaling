@@ -19,7 +19,9 @@ bundle
 ```
 cp config/config.yml.template config/config.yml
 ```
-Replace values in config.yml to fit your context.
+Replace values in config.yml to fit your context. 
+
+Also you can use following environment variables to configure autoscaler: `CF_API`, `CF_USERNAME`, `CF_PASSWORD`, `CF_ORGANIZATION`, `CF_SPACE`, `CF_APPLICATION`
 
 #### Push demo app
 I've created a simple sinatra app that generate secure random number which require CPU (I am very new at this. 
@@ -35,7 +37,7 @@ cf push
 ### Auto-Scaling script
 Just run 
 ```
-./auto_scale.rb
+bundle exec ./bin/auto_scale.rb
 ```
 This script runs forever. Just CTR + C it when you are done
 
@@ -100,5 +102,10 @@ App sinatra-manu stats:
 -- AVG CPU load: 0.00 %
 -- AVG Memory: 25.61 MB
 ```
+
+#### Deploy autoscaler as an application to Cloud Foundry
+
+Aditionaly you can run autoscaler application within Cloud Foundry. In order to do it just copy `manifest.yml.template` to `manifest.yml`, fill in necessary info and run `cf push`. It's easy!
+
 ___
 You are welcome to contribute via [pull request](https://help.github.com/articles/using-pull-requests).
