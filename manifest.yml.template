@@ -1,0 +1,15 @@
+---
+applications:
+  - name: autoscaler
+    memory: 512M
+    instances: 1
+    command: bundle exec ./bin/auto_scale.rb
+    no-route: true
+    buildpack: https://github.com/cloudfoundry/buildpack-ruby.git
+    env:
+      CF_API: <api-url>
+      CF_USERNAME: <username>
+      CF_PASSWORD: <password>
+      CF_ORGANIZATION: <organization>
+      CF_SPACE: <space>
+      CF_APPLICATION: <application>
