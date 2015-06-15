@@ -2,36 +2,36 @@ GEM
   remote: https://rubygems.org/
   remote: https://s3.amazonaws.com/bosh-jenkins-gems/
   specs:
-    activemodel (4.1.4)
-      activesupport (= 4.1.4)
+    activemodel (4.2.1)
+      activesupport (= 4.2.1)
       builder (~> 3.1)
-    activesupport (4.1.4)
-      i18n (~> 0.6, >= 0.6.9)
+    activesupport (4.2.1)
+      i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
-      thread_safe (~> 0.1)
+      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     builder (3.2.2)
     cf-uaa-lib (2.0.1)
       multi_json
-    cfoundry (4.7.1)
+    cfoundry (4.7.2.rc1)
       activemodel (>= 3.2.13, < 5.0.0)
-      cf-uaa-lib (~> 2.0.0)
+      cf-uaa-lib (~> 2.0.1)
       multi_json (~> 1.7)
       multipart-post (~> 1.1)
       rubyzip (~> 0.9)
-    i18n (0.6.11)
-    json (1.8.1)
-    minitest (5.4.0)
-    multi_json (1.10.1)
+    i18n (0.7.0)
+    json (1.8.3)
+    minitest (5.7.0)
+    multi_json (1.11.1)
     multipart-post (1.2.0)
     rubyzip (0.9.9)
-    thread_safe (0.3.4)
-    tzinfo (1.2.1)
+    thread_safe (0.3.5)
+    tzinfo (1.2.2)
       thread_safe (~> 0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  cfoundry
+  cfoundry (= 4.7.2.rc1)
