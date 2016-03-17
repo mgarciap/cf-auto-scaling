@@ -26,6 +26,10 @@ puts "CPU threshold: #{threshold}%"
 puts "-"*30
 puts
 
+threshold = 70
+puts "Memory threshold: #{threshold}%"
+puts "-"*30
+puts
 
 while true do
   avg_cpu_load = app_average_cpu_load app
@@ -39,6 +43,22 @@ while true do
   if avg_cpu_load >= threshold
     puts "------------> AVG CPU Load went over threshold (#{threshold} %), scaling app by 1 instance"
     scale_app(app, 1)
+  end
+  if avg_mem >= threshold
+    puts "------------> AVG MEM Load went over threshold (#{threshold} %), scaling app by 1 instance"
+    scale_app(app, 1)
+  end
+  app.stats.each do |i, app_stat|
+    if app_stat.keys.include? :stats
+      i_used = app_stat[:stats][:usage][:mem]
+      i_quota = app_stat[:stats][:mem_quota]
+      i_perc = i_used * 100 / i_quota
+      #puts "Instance #{i} use: #{humanise_bytes_to_megabytes i_use}"
+      #puts "Instance #{i} quota: #{humanise_bytes_to_megabytes i_quota}"
+      puts "#{config.application} - #{i} use: #{i_perc}%"
+    else
+      puts "Instance #{i} still booting..."
+    end
   end
 
   sleep 2.0
